@@ -10,26 +10,34 @@
 
         <form action="/order/edit" th:object="${order}" method="post">
             <input type="hidden" th:field="*{id}">
+
             <div class="mb-3">
                 <label for="category" class="form-label">Loại sản phẩm (*)</label>
-                <select  name="category" id="category" th:field="*{products.categories}">
+                <select  name="category" id="category" th:field="*{products.categories.id}">
                     <option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
                 </select>
-<!--                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" ></div>-->
+<!--                <div th:if="${#fields.hasErrors('category')}" th:errors="*{products.categories.id}" ></div>-->
             </div>
+
+
 
             <div class="mb-3">
                 <label for="products" class="form-label">Sản phẩm</label>
-                <select  name="category" id="products" th:field="*{products}">
+                <select  name="product" id="products" th:field="*{products.id}">
                     <option th:each="p : ${products}" th:text="${p.name}" th:value="${p.id}"></option>
                 </select>
-<!--                <div th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}" ></div>-->
+<!--                <div th:if="${#fields.hasErrors('products')}" th:errors="*{products.id}" ></div>-->
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label" >Số lượng</label>
+                <input type="text" class="form-control" id="quantity" th:field="*{quantity}">
+<!--                                <div th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" ></div>-->
             </div>
 
             <div class="mb-3">
-                <label for="BuyDay" class="form-label" >Ngày mua</label>
-                <input type="date" class="form-control" id="BuyDay" th:field="*{buyDay}">
-<!--                <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" ></div>-->
+                <label for="buyDay" class="form-label" >Ngày mua</label>
+                <input type="date" class="form-control" id="buyDay" th:field="*{buyDay}">
+<!--                <div th:if="${#fields.hasErrors('buyDay')}" th:errors="*{buyDay}" ></div>-->
             </div>
 
 

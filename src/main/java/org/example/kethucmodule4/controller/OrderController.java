@@ -13,6 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/order")
 public class OrderController {
@@ -44,13 +47,23 @@ public class OrderController {
         return "/edit";
     }
     @PostMapping("/edit")
-    private String saveOrder(@ModelAttribute("order") Orders orders, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        if (bindingResult.hasFieldErrors()){
-            return "/edit";
-        }
-        redirectAttributes.addFlashAttribute("message", "Lưu thành công");
-        orderService.save(orders);
+    private String saveOrder(@ModelAttribute("order") Orders order){
+
+//        if (bindingResult.hasFieldErrors()){
+//            return "/edit";
+//        }
+//        redirectAttributes.addFlashAttribute("message", "Lưu thành công");
+        orderService.save(order);
         return "redirect:/order";
+    }
+    @GetMapping("/search")
+    private String search(@RequestParam(required = false,name = "dayMin") LocalDate dayMin,
+                          @RequestParam(required = false,name = "dayMax") LocalDate dayMax,
+                          Model model){
+        Iterable<Orders> orders = orderService.findByDay(dayMin,dayMax);
+        model.addAttribute("orders",orders);
+        return "/search";
+
     }
 
 }
